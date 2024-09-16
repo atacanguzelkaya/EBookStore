@@ -1,0 +1,38 @@
+﻿﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - EBookStore</title>
+	<link href="/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="~/css/_AdminLayout.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/EBookStore.styles.css" asp-append-version="true" />
+	<link rel="stylesheet"
+		  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+</head>
+<body>
+	<partial name="_NavbarPartial" />
+	<div class="main-contaier">
+		<div class="sidenav">
+			<a class="navigation-link" href="/Home/Index"><i class="bi bi-house-door"></i> Home</a>
+			<a href="/Orders/Index" class="navigation-link"><i class="bi bi-receipt"></i> Orders</a>
+			<a href="/Books/Index" class="navigation-link"><i class="bi bi-book"></i> Books</a>
+			<a href="/Categories/Index" class="navigation-link"><i class="bi bi-collection"></i> Category</a>
+			<a href="/Authors/Index" class="navigation-link"><i class="bi bi-person-lines-fill"></i> Author</a>
+			<a href="/Publishers/Index" class="navigation-link"><i class="bi bi-book-half"></i> Publisher</a>
+		</div>
+		<div class="right-panel">
+			<div class="content">
+				@RenderBody()
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+			integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+			crossorigin="anonymous"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

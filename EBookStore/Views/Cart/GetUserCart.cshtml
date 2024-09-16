@@ -1,0 +1,95 @@
+﻿@model Cart
+@{
+	ViewData["Title"] = "GetUserCart";
+}
+
+<div class="container mb-5 pb-5">
+	@if (Model != null && Model.CartItems != null && Model.CartItems.Count > 0)
+	{
+		<div class="py-3 text-center">
+			<h1 class="display-4">Cart Shopping Detail</h1>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-7 mb-5">
+				<div class="bg-white rounded shadow-sm p-5">
+					<!-- Shopping cart table -->
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr class="bg-primary text-white">
+									<th scope="col"><div class="py-2 px-3 text-uppercase">Book</div></th>
+									<th scope="col"><div class="py-2 text-uppercase">Price</div></th>
+									<th scope="col"><div class="py-2 text-uppercase">Quantity</div></th>
+									<th scope="col"><div class="py-2 text-uppercase">Total Price</div></th>
+									<th scope="col"><div class="py-2 text-uppercase"></div></th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var ci in Model.CartItems)
+								{
+									<tr>
+										<td scope="row">
+											<div class="p-2">
+												@if (ci.Book != null)
+												{
+													<img src="@(ci.Book.Image ?? "/images/NoImage.png")" width="40" height="60"
+														 class="img-fluid rounded shadow-sm" alt="@((ci.Book.Title) ?? "No Image Available")" />
+													<div class="ml-3 d-inline-block align-middle">
+														<h5 class="mb-0"> <a href="/Books/Details/@ci.Book.Id" class="text-dark d-inline-block align-middle">@ci.Book.Title</a></h5>
+														@if (ci.Book.Category != null)
+														{
+															<span class="text-muted font-weight-normal font-italic d-block">Category: @ci.Book.Category.Name</span>
+														}
+													</div>
+												}
+											</div>
+										</td>
+										<td class="align-middle"><strong>@ci.UnitPrice</strong></td>
+										<td class="align-middle"><strong>@ci.Quantity</strong></td>
+										<td class="align-middle"><strong>@(ci.UnitPrice * ci.Quantity)</strong></td>
+										<td class="align-middle">
+											@if (ci.Quantity < ci.Book.Stock)
+											{
+												<button class="btn btn-outline-dark" onclick="increaseItem('@ci.BookId')">+</button>
+											}
+											else
+											{
+												<span class="btn btn-outline-dark disabled">Out of stock</span>
+											}
+											<button class="btn btn-outline-dark" onclick="decreaseItem('@ci.BookId')">-</button>
+											<button class="btn btn-outline-dark" onclick="removeItem('@ci.BookId')"><i class="bi bi-trash"></i></button>
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+					<!-- End Shopping cart table -->
+				</div>
+			</div>
+
+			<div class="col-lg-5 mb-5">
+				<div class="bg-white rounded shadow-sm p-5">
+					<div class="bg-primary text-white rounded-pill px-4 py-3 text-uppercase fw-bold">Order summary</div>
+					<div class="p-4">
+						<p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
+						<ul class="list-unstyled mb-4">
+							<li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal</strong><strong>₺@(Model.CartItems.Sum(i => i.UnitPrice * i.Quantity))</strong></li>
+							<li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>₺0.00</strong></li>
+							<li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>₺0.00</strong></li>
+							<li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total Price of Order</strong><h5 class="font-weight-bold">₺@(Model.CartItems.Sum(i => i.UnitPrice * i.Quantity))</h5></li>
+						</ul>
+						<a asp-action="Checkout" class="btn btn-dark rounded-pill py-2 btn-block">Proceed to checkout</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+	else
+	{
+		<div>
+			<h1 class="text-center pt-3 m-3">Cart is empty</h1>
+		</div>
+	}
+</div>

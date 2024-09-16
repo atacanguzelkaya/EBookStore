@@ -1,0 +1,13 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirm email";
+}
+
+<div class="container text-center">
+<h1 class="my-5">@ViewData["Title"]</h1>
+<partial name="_StatusMessage" model="Model.StatusMessage"/>
+
+<a class="btn bsb-btn-5xl btn-primary rounded-pill px-5 fs-6 m-0 m-3" href="/" role="button">Back to Home</a>
+    <a class="btn bsb-btn-5xl btn-success rounded-pill px-5 fs-6 m-0 m-3" href="/Identity/Account/Login" role="button">Back to Login</a>
+</div>

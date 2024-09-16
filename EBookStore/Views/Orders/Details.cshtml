@@ -1,0 +1,80 @@
+﻿@model EBookStore.Models.Order
+
+@{
+    ViewData["Title"] = "Order Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var totalPrice = Model.OrderItems.Sum(item => item.Quantity * item.UnitPrice);
+}
+
+<h1>Order Details</h1>
+
+<div class="row">
+    <!-- Kullanıcı Bilgileri -->
+    <div class="col-md-6">
+        <h4>User Information</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Name)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Name)</dd>
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Email)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Email)</dd>
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.MobileNumber)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.MobileNumber)</dd>
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Address)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Address)</dd>
+        </dl>
+    </div>
+
+    <!-- Sipariş Detayları -->
+    <div class="col-md-6">
+        <h4>Order Information</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.PaymentMethod)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.PaymentMethod)</dd>
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.IsPaid)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.IsPaid)</dd>
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.CreatedDate)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.CreatedDate)</dd>
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DeletedDate)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.DeletedDate)</dd>
+        </dl>
+    </div>
+</div>
+
+<!-- Sipariş Edilen Ürünler -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <h4>Ordered Items</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Book Name</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderItems)
+                {
+                    <tr>
+                        <td>@item.Book.Title</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UnitPrice.ToString("C")</td>
+                        <td>₺ @(item.Quantity * item.UnitPrice)</td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="3" class="text-right"><strong>Total Price:</strong></td>
+                    <td><strong>@totalPrice.ToString("C")</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>
